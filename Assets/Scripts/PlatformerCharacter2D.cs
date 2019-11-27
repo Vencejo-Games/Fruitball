@@ -116,6 +116,8 @@ using UnityEngine;
 
         public void Shoot(bool shoot)
         {
+            // Set whether or not the character is crouching in the animator
+            m_Anim.SetBool("Shoot", shoot);
             if (shoot)
             {
                 // Instantiate a projectile

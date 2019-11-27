@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6460290568132490680}
   m_Layer: 0
   m_Name: Fruitball
-  m_TagString: Untagged
+  m_TagString: Fruitball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
