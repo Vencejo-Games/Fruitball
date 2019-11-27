@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private int player = 1;
+
     private Game game;
     
     private void Awake()
     {
         game = FindObjectOfType<Game>();
+    }
+
+    public string getPlayerNumber()
+    {
+        return (player == 1 ? "" : player.ToString());
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -27,11 +34,15 @@ public class Player : MonoBehaviour
                 StartCoroutine(HurtEnemy(collision.gameObject.GetComponent<Enemy>()));
                 break;
             case "Gem":
-                game.AddLife();
+                game.AddLife(player);
                 Destroy(collision.gameObject);
                 break;
             case "Coin":
                 game.AddPoints(100);
+                Destroy(collision.gameObject);
+                break;
+            case "Fruitball":
+                Hurt();
                 Destroy(collision.gameObject);
                 break;
             default:
@@ -51,7 +62,7 @@ public class Player : MonoBehaviour
     void Hurt()
     {
         // lose life
-        game.LoseLife();
+        game.LoseLife(player);
         Destroy(this.gameObject);
     }
 }

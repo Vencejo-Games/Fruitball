@@ -9,8 +9,6 @@ using UnityStandardAssets.CrossPlatformInput;
         private bool m_Jump;
         private bool m_Shoot;
 
-        [SerializeField] private int player = 1;
-
         private void Awake()
         {
             m_Character = GetComponent<PlatformerCharacter2D>();
@@ -21,11 +19,11 @@ using UnityStandardAssets.CrossPlatformInput;
             if (!m_Jump)
             {
                 // Read the jump input in Update so button presses aren't missed.
-                m_Jump = CrossPlatformInputManager.GetButtonDown("Jump" + getPlayerNumber());
+                m_Jump = CrossPlatformInputManager.GetButtonDown("Jump" + m_Character.getPlayerNumber());
             }
             if (!m_Shoot)
             {
-                m_Shoot = CrossPlatformInputManager.GetButtonDown("Fire" + getPlayerNumber());
+                m_Shoot = CrossPlatformInputManager.GetButtonDown("Fire" + m_Character.getPlayerNumber());
             }
         }
 
@@ -34,7 +32,7 @@ using UnityStandardAssets.CrossPlatformInput;
         {
             // Read the inputs.
             bool crouch = Input.GetKey(KeyCode.LeftControl);
-            float h = CrossPlatformInputManager.GetAxis("Horizontal" + getPlayerNumber());
+            float h = CrossPlatformInputManager.GetAxis("Horizontal" + m_Character.getPlayerNumber());
             // Pass all parameters to the character control script.
             m_Character.Move(h, crouch, m_Jump);
             m_Character.Shoot(m_Shoot);
@@ -42,8 +40,4 @@ using UnityStandardAssets.CrossPlatformInput;
             m_Shoot = false;
         }
 
-        private string getPlayerNumber()
-        {
-            return (player == 1 ? "" : player.ToString());
-        }
     }
