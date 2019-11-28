@@ -47,7 +47,6 @@ GameObject:
   - component: {fileID: 11400000}
   - component: {fileID: 6100000}
   - component: {fileID: 3100154467318011412}
-  - component: {fileID: 7019446790700123830}
   m_Layer: 0
   m_Name: CharacterBatidora
   m_TagString: Player
@@ -198,6 +197,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   fruitball: {fileID: 6460290568132490680, guid: fdd335ea8df8d524b88e699c8a306a15,
     type: 3}
+  lives: 5
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,18 +247,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa29256f178d7924ea9f419b032563b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7019446790700123830
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8824c821b3383d14486e690ed788fd64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &100004

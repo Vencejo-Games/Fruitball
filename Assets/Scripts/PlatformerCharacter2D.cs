@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlatformerCharacter2D : MonoBehaviour
@@ -10,6 +12,7 @@ public class PlatformerCharacter2D : MonoBehaviour
     [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
 
     [SerializeField] private Fruitball fruitball;
+    [SerializeField] public int lives;
 
     private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
     const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
@@ -20,14 +23,9 @@ public class PlatformerCharacter2D : MonoBehaviour
     private Rigidbody2D m_Rigidbody2D;
     private bool m_FacingRight = false;  // For determining which way the player is currently facing.
 
+    private Game game;
     private Transform m_ShootingPoint;    // A position marking where to shoot
-
-    private Player player;
-
-    public string getPlayerNumber()
-    {
-        return player.getPlayerNumber();
-    }
+    
 
     private void Awake()
     {
@@ -36,8 +34,9 @@ public class PlatformerCharacter2D : MonoBehaviour
         m_CeilingCheck = transform.Find("CeilingCheck");
         m_Anim = GetComponent<Animator>();
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
+
         m_ShootingPoint = transform.Find("ShootingPoint");
-        player = GetComponent<Player>();
+        game = FindObjectOfType<Game>();
     }
     
     private void FixedUpdate()
@@ -130,6 +129,57 @@ public class PlatformerCharacter2D : MonoBehaviour
             Fruitball obj = Instantiate(fruitball, m_ShootingPoint.position, Quaternion.identity);
             obj.Move(m_FacingRight);
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            //Hurt();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            case "Enemy":
+                //StartCoroutine(HurtEnemy(collision.gameObject.GetComponent<Enemy>()));
+                break;
+            case "Gem":
+                AddLife();
+                Destroy(collision.gameObject);
+                break;
+            case "Fruitball":
+                StartCoroutine(Hurt());
+                Destroy(collision.gameObject);
+                break;
+            default:
+                break;
+        }
+    }
+
+    IEnumerator Hurt()
+    {
+        lives--;
+        game.UpdateHUD();
+        if (lives > 0)
+        {
+            m_Anim.SetBool("Hurt", true);
+            yield return new WaitForSeconds(0.5f);
+            m_Anim.SetBool("Hurt", false);
+        }
+        else
+        {
+            game.EndGame();
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void AddLife()
+    {
+        lives++;
+        game.UpdateHUD();
     }
 
 }
