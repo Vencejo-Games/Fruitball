@@ -8,6 +8,7 @@ TagManager:
   - Gem
   - Coin
   - Fruitball
+  - Sea
   layers:
   - Default
   - TransparentFX

@@ -6,9 +6,6 @@ public abstract class Fruit : MonoBehaviour
 {
     [SerializeField] public Sprite fruitSprite;
 
-    [SerializeField] public AnimationClip idleAnimationClip;
-    [SerializeField] public AnimationClip walkAnimationClip;
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         switch (collision.gameObject.tag)

@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 6100000}
   - component: {fileID: 3100154467318011412}
   - component: {fileID: 265648179131269983}
+  - component: {fileID: 7771127490317574604}
   m_Layer: 0
   m_Name: CharacterBatidora
   m_TagString: Player
@@ -199,8 +200,24 @@ MonoBehaviour:
   fruitball: {fileID: 6460290568132490680, guid: fdd335ea8df8d524b88e699c8a306a15,
     type: 3}
   lives: 5
+  respawnPoint: {fileID: 0}
   idleAnimationClip: {fileID: 7400000, guid: 9f2f56ed321478541a9062c71400c755, type: 2}
   walkAnimationClip: {fileID: 7400000, guid: 80c46b50a11719247b67f4fc3bcb2ddf, type: 2}
+  bananaIdleAnimationClip: {fileID: 7400000, guid: 9d42a13bccd1faa4fb12923893764da0,
+    type: 2}
+  bananaWalkAnimationClip: {fileID: 7400000, guid: db48d2913b2fabb4eb121962d2b5eb21,
+    type: 2}
+  pearIdleAnimationClip: {fileID: 7400000, guid: a39e354b3bde2ac4f831667bede9720c,
+    type: 2}
+  pearWalkAnimationClip: {fileID: 7400000, guid: 6c7c0d1c8cdf58146932cc5156ed5cae,
+    type: 2}
+  strawIdleAnimationClip: {fileID: 7400000, guid: 4adf4043664775b4ab42dc7272eca70c,
+    type: 2}
+  strawWalkAnimationClip: {fileID: 7400000, guid: d98aaed682fd94f47ad3e61798a61fcc,
+    type: 2}
+  seaSound: {fileID: 8300000, guid: 4e47007838e1f6547819bc9fc7c7dcf9, type: 3}
+  blenderSound: {fileID: 8300000, guid: ce2d44416262c914893bc811e73e88fa, type: 3}
+  hitSound: {fileID: 8300000, guid: e5babb8e96d2c4c418d70523a485fffb, type: 3}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,6 +295,102 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.6709881, y: 0.6313362}
   m_EdgeRadius: 0
+--- !u!82 &7771127490317574604
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 0.8
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &100004
 GameObject:
   m_ObjectHideFlags: 0

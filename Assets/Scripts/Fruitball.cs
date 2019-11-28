@@ -6,6 +6,8 @@ public class Fruitball : MonoBehaviour
 {
     private float speed = 10f;
 
+    public Fruit fruit;
+
     //private Rigidbody2D body;
     private bool movementDirection;
 

@@ -19,7 +19,6 @@ public class Game : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI livesText2;
 
-
     [SerializeField] private Spawner[] spawners;
 
     private void Start()
@@ -27,15 +26,17 @@ public class Game : MonoBehaviour
         UpdateHUD();
     }
 
-    IEnumerator StartNewGame()
+    IEnumerator EndScreen(int player)
     {
-        yield return new WaitForSeconds(3);
-        SceneManager.LoadScene(0);
+        yield return new WaitForSeconds(1);
+
+        if(player == 1) { SceneManager.LoadScene(3); }
+        else if (player == 2) { SceneManager.LoadScene(2); }
     }
 
-    public void EndGame()
+    public void EndGame(int player)
     {
-        StartCoroutine(StartNewGame());
+        StartCoroutine(EndScreen(player));
     }
 
     public void UpdateHUD()

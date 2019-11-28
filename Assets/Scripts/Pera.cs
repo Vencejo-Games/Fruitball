@@ -8,4 +8,5 @@ public class Pera: Fruit
     {
         player.AddShot(this);
     }
+
 }

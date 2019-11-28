@@ -5,8 +5,7 @@ using UnityStandardAssets.CrossPlatformInput;
 [RequireComponent(typeof(PlatformerCharacter2D))]
 public class Platformer2DUserControl : MonoBehaviour
 {
-
-    [SerializeField] private int player = 1;
+    [SerializeField] public int player = 1;
 
     private PlatformerCharacter2D m_Character;
     private bool m_Jump;
@@ -29,7 +28,6 @@ public class Platformer2DUserControl : MonoBehaviour
             m_Shoot = CrossPlatformInputManager.GetButtonDown("Fire" + GetPlayerNumber());
         }
     }
-
 
     private void FixedUpdate()
     {

@@ -14,6 +14,8 @@ public class PlatformerCharacter2D : MonoBehaviour
     [SerializeField] private Fruitball fruitball;
     [SerializeField] public int lives;
 
+    [SerializeField] private Transform respawnPoint;
+
     private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
     const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
     private bool m_Grounded;            // Whether or not the player is grounded.
@@ -28,9 +30,26 @@ public class PlatformerCharacter2D : MonoBehaviour
     private bool hasShot = false;
     private Fruit currentFruit;
 
+    Platformer2DUserControl platformer2DUserControl;
+
     private AnimatorOverrideController animatorOverrideController;
     [SerializeField] private AnimationClip idleAnimationClip;
     [SerializeField] private AnimationClip walkAnimationClip;
+
+    [SerializeField] private AnimationClip bananaIdleAnimationClip;
+    [SerializeField] private AnimationClip bananaWalkAnimationClip;
+
+    [SerializeField] private AnimationClip pearIdleAnimationClip;
+    [SerializeField] private AnimationClip pearWalkAnimationClip;
+
+    [SerializeField] private AnimationClip strawIdleAnimationClip;
+    [SerializeField] private AnimationClip strawWalkAnimationClip;
+
+    [SerializeField] AudioClip seaSound;
+    [SerializeField] AudioClip blenderSound;
+    [SerializeField] AudioClip hitSound;
+
+    private AudioSource audioSource;
 
     public class AnimationClipOverrides : List<KeyValuePair<AnimationClip, AnimationClip>>
     {
@@ -59,6 +78,9 @@ public class PlatformerCharacter2D : MonoBehaviour
 
         m_ShootingPoint = transform.Find("ShootingPoint");
         game = FindObjectOfType<Game>();
+
+        platformer2DUserControl = GetComponent<Platformer2DUserControl>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -160,11 +182,20 @@ public class PlatformerCharacter2D : MonoBehaviour
             Fruitball obj = Instantiate(fruitball, m_ShootingPoint.position, Quaternion.identity);
             SpriteRenderer spriteR = obj.GetComponent<SpriteRenderer>();
             spriteR.sprite = currentFruit.fruitSprite;
+            obj.fruit = currentFruit;
             obj.Move(m_FacingRight);
-            //animatorOverrideController["Idle"] = idleAnimationClip;
-            //animatorOverrideController["Walk"] = walkAnimationClip;
-            clipOverrides["BatidoraIdle1"] = idleAnimationClip;
-            clipOverrides["BatidoraWalk1"] = walkAnimationClip;
+
+            if (platformer2DUserControl.player == 1)
+            {
+                clipOverrides["BatidoraIdle1"] = idleAnimationClip;
+                clipOverrides["BatidoraWalk1"] = walkAnimationClip;
+            }
+            else if (platformer2DUserControl.player == 2)
+            {
+                clipOverrides["BatidoraIdle2"] = idleAnimationClip;
+                clipOverrides["BatidoraWalk2"] = walkAnimationClip;
+            }
+            
             animatorOverrideController.ApplyOverrides(clipOverrides);
         }
     }
@@ -189,22 +220,42 @@ public class PlatformerCharacter2D : MonoBehaviour
                 Destroy(collision.gameObject);
                 break;
             case "Fruitball":
-                DoHurt();
+                audioSource.clip = hitSound;
+                audioSource.Play();
+                Fruitball fruitball = collision.gameObject.GetComponent<Fruitball>();
+                DoHurt(fruitball.fruit);
                 Destroy(collision.gameObject);
+                break;
+            case "Sea":
+                audioSource.clip = seaSound;
+                audioSource.Play();
+                StartCoroutine(HurtGeneral());
+                Respawn();
                 break;
             default:
                 break;
         }
     }
 
-    public void DoHurt()
+    public void Respawn()
     {
-        StartCoroutine(Hurt());
+        transform.position = respawnPoint.position;
     }
 
-    IEnumerator Hurt()
+    public void DoHurt(Fruit fruit)
+    {
+        StartCoroutine(Hurt(fruit));
+    }
+
+    public void DoHurtGeneral()
+    {
+        StartCoroutine(HurtGeneral());
+    }
+
+    IEnumerator HurtGeneral()
     {
         lives--;
+
         game.UpdateHUD();
         if (lives > 0)
         {
@@ -214,9 +265,48 @@ public class PlatformerCharacter2D : MonoBehaviour
         }
         else
         {
-            game.EndGame();
+            game.EndGame(platformer2DUserControl.player);
             Destroy(this.gameObject);
         }
+    }
+
+    IEnumerator Hurt(Fruit other)
+    {
+        lives--;
+
+        // si es platano restar 2 vidas
+        if (other.GetType() == typeof(Platano)) { lives--; }
+
+        if (other.GetType() == typeof(Pera))
+        {
+            lives++;
+
+            if (platformer2DUserControl.player == 1)
+            {
+                m_Rigidbody2D.AddForce(new Vector2(-8000f, 0f));
+            }
+            else
+            {
+                m_Rigidbody2D.AddForce(new Vector2(8000f, 0f));
+            }
+
+            
+        }
+
+        game.UpdateHUD();
+        if (lives > 0)
+        {
+            m_Anim.SetBool("Hurt", true);
+            yield return new WaitForSeconds(0.3f);
+            m_Anim.SetBool("Hurt", false);
+        }
+        else
+        {
+            game.EndGame(platformer2DUserControl.player);
+            Destroy(this.gameObject);
+        }
+
+
     }
 
     public void AddLife()
@@ -227,12 +317,49 @@ public class PlatformerCharacter2D : MonoBehaviour
 
     public void AddShot(Fruit fruit)
     {
+        audioSource.clip = blenderSound;
+        audioSource.Play();
+
         hasShot = true;
         currentFruit = fruit;
-        //animatorOverrideController["Idle"] = fruit.idleAnimationClip;
-        //animatorOverrideController["Walk"] = fruit.walkAnimationClip;
-        clipOverrides["BatidoraIdle1"] = fruit.idleAnimationClip;
-        clipOverrides["BatidoraWalk1"] = fruit.walkAnimationClip;
+
+        if(platformer2DUserControl.player == 1)
+        {
+            if (currentFruit.GetType() == typeof(Pera))
+            {
+                clipOverrides["BatidoraIdle1"] = pearIdleAnimationClip;
+                clipOverrides["BatidoraWalk1"] = pearWalkAnimationClip;
+            }
+            else if (currentFruit.GetType() == typeof(Platano))
+            {
+                clipOverrides["BatidoraIdle1"] = bananaIdleAnimationClip;
+                clipOverrides["BatidoraWalk1"] = bananaWalkAnimationClip;
+            }
+            else if (currentFruit.GetType() == typeof(Fresa))
+            {
+                clipOverrides["BatidoraIdle1"] = strawIdleAnimationClip;
+                clipOverrides["BatidoraWalk1"] = strawWalkAnimationClip;
+            }
+        }
+        else if (platformer2DUserControl.player == 2)
+        {
+            if (currentFruit.GetType() == typeof(Pera))
+            {
+                clipOverrides["BatidoraIdle2"] = pearIdleAnimationClip;
+                clipOverrides["BatidoraWalk2"] = pearWalkAnimationClip;
+            }
+            else if (currentFruit.GetType() == typeof(Platano))
+            {
+                clipOverrides["BatidoraIdle2"] = bananaIdleAnimationClip;
+                clipOverrides["BatidoraWalk2"] = bananaWalkAnimationClip;
+            }
+            else if (currentFruit.GetType() == typeof(Fresa))
+            {
+                clipOverrides["BatidoraIdle2"] = strawIdleAnimationClip;
+                clipOverrides["BatidoraWalk2"] = strawWalkAnimationClip;
+            }
+        }
+        
         animatorOverrideController.ApplyOverrides(clipOverrides);
     }
 
