@@ -34,7 +34,11 @@ public class Platformer2DUserControl : MonoBehaviour
     private void FixedUpdate()
     {
         // Read the inputs.
-        bool crouch = Input.GetKey(KeyCode.LeftControl);
+
+        //bool crouch = Input.GetKey(KeyCode.LeftControl);
+        // no vamos a usar crouch
+        bool crouch = false;
+
         float h = CrossPlatformInputManager.GetAxis("Horizontal" + GetPlayerNumber());
         // Pass all parameters to the character control script.
         m_Character.Move(h, crouch, m_Jump);
@@ -45,7 +49,7 @@ public class Platformer2DUserControl : MonoBehaviour
 
     private string GetPlayerNumber()
     {
-        return player == 1 ? "" : (""+player);
+        return player == 1 ? "" : ("" + player);
     }
 
 }

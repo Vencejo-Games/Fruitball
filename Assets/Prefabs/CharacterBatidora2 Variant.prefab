@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100002, guid: cee47c5519b86414dab84b29621661e9, type: 3}
       propertyPath: m_Name
-      value: CharacterBatidora2
+      value: CharacterBatidora2 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: cee47c5519b86414dab84b29621661e9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -55,6 +55,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: cee47c5519b86414dab84b29621661e9, type: 3}
+      propertyPath: idleAnimationClip
+      value: 
+      objectReference: {fileID: 7400000, guid: 4f808e30264d4114495303d6c6a06342, type: 2}
+    - target: {fileID: 11400002, guid: cee47c5519b86414dab84b29621661e9, type: 3}
+      propertyPath: walkAnimationClip
+      value: 
+      objectReference: {fileID: 7400000, guid: 54a00f9418ee7864ca0db03faa4e2af5, type: 2}
     - target: {fileID: 21200000, guid: cee47c5519b86414dab84b29621661e9, type: 3}
       propertyPath: m_Sprite
       value: 

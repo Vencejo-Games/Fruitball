@@ -6,6 +6,6 @@ public class Pera: Fruit
 {
     public override void PowerUp(PlatformerCharacter2D player)
     {
-
+        player.AddShot(this);
     }
 }

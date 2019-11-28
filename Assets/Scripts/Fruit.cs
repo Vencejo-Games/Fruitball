@@ -6,13 +6,15 @@ public abstract class Fruit : MonoBehaviour
 {
     [SerializeField] public Sprite fruitSprite;
 
+    [SerializeField] public AnimationClip idleAnimationClip;
+    [SerializeField] public AnimationClip walkAnimationClip;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         switch (collision.gameObject.tag)
         {
             case "Player":
                 PlatformerCharacter2D player = collision.gameObject.GetComponent<PlatformerCharacter2D>();
-                player.AddShot(this);
                 PowerUp(player);
                 Destroy(this.gameObject);
                 break;

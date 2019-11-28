@@ -96,6 +96,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fruitSprite: {fileID: 21300000, guid: 2198fc51a9c6df84aa2287d56fac34a6, type: 3}
+  idleAnimationClip: {fileID: 7400000, guid: d98aaed682fd94f47ad3e61798a61fcc, type: 2}
+  walkAnimationClip: {fileID: 7400000, guid: d98aaed682fd94f47ad3e61798a61fcc, type: 2}
 --- !u!61 &6665670133382276782
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -172,7 +172,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 4
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 3626fe8e008014f6bbd19bb72937b311, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -199,6 +199,8 @@ MonoBehaviour:
   fruitball: {fileID: 6460290568132490680, guid: fdd335ea8df8d524b88e699c8a306a15,
     type: 3}
   lives: 5
+  idleAnimationClip: {fileID: 7400000, guid: 9f2f56ed321478541a9062c71400c755, type: 2}
+  walkAnimationClip: {fileID: 7400000, guid: 80c46b50a11719247b67f4fc3bcb2ddf, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0

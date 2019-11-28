@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Platano: Fruit
+public class Brick : Fruit
 {
     public override void PowerUp(PlatformerCharacter2D player)
     {
-        player.AddShot(this);
+        player.DoHurt();
     }
 }

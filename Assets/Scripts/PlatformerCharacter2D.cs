@@ -28,6 +28,27 @@ public class PlatformerCharacter2D : MonoBehaviour
     private bool hasShot = false;
     private Fruit currentFruit;
 
+    private AnimatorOverrideController animatorOverrideController;
+    [SerializeField] private AnimationClip idleAnimationClip;
+    [SerializeField] private AnimationClip walkAnimationClip;
+
+    public class AnimationClipOverrides : List<KeyValuePair<AnimationClip, AnimationClip>>
+    {
+        public AnimationClipOverrides(int capacity) : base(capacity) { }
+
+        public AnimationClip this[string name]
+        {
+            get { return this.Find(x => x.Key.name.Equals(name)).Value; }
+            set
+            {
+                int index = this.FindIndex(x => x.Key.name.Equals(name));
+                if (index != -1)
+                    this[index] = new KeyValuePair<AnimationClip, AnimationClip>(this[index].Key, value);
+            }
+        }
+    }
+    protected AnimationClipOverrides clipOverrides;
+
     private void Awake()
     {
         // Setting up references.
@@ -39,7 +60,15 @@ public class PlatformerCharacter2D : MonoBehaviour
         m_ShootingPoint = transform.Find("ShootingPoint");
         game = FindObjectOfType<Game>();
     }
-    
+
+    private void Start()
+    {
+        animatorOverrideController = new AnimatorOverrideController(m_Anim.runtimeAnimatorController);
+        m_Anim.runtimeAnimatorController = animatorOverrideController;
+        clipOverrides = new AnimationClipOverrides(animatorOverrideController.overridesCount);
+        animatorOverrideController.GetOverrides(clipOverrides);
+    }
+
     private void FixedUpdate()
     {
         m_Grounded = false;
@@ -123,7 +152,7 @@ public class PlatformerCharacter2D : MonoBehaviour
     public void Shoot(bool shoot)
     {
         // Set whether or not the character is crouching in the animator
-        m_Anim.SetBool("Shoot", shoot);
+        m_Anim.SetBool("Shoot", shoot&hasShot);
         if (shoot && hasShot)
         {
             hasShot = false;
@@ -132,6 +161,11 @@ public class PlatformerCharacter2D : MonoBehaviour
             SpriteRenderer spriteR = obj.GetComponent<SpriteRenderer>();
             spriteR.sprite = currentFruit.fruitSprite;
             obj.Move(m_FacingRight);
+            //animatorOverrideController["Idle"] = idleAnimationClip;
+            //animatorOverrideController["Walk"] = walkAnimationClip;
+            clipOverrides["BatidoraIdle1"] = idleAnimationClip;
+            clipOverrides["BatidoraWalk1"] = walkAnimationClip;
+            animatorOverrideController.ApplyOverrides(clipOverrides);
         }
     }
 
@@ -155,12 +189,17 @@ public class PlatformerCharacter2D : MonoBehaviour
                 Destroy(collision.gameObject);
                 break;
             case "Fruitball":
-                StartCoroutine(Hurt());
+                DoHurt();
                 Destroy(collision.gameObject);
                 break;
             default:
                 break;
         }
+    }
+
+    public void DoHurt()
+    {
+        StartCoroutine(Hurt());
     }
 
     IEnumerator Hurt()
@@ -190,6 +229,11 @@ public class PlatformerCharacter2D : MonoBehaviour
     {
         hasShot = true;
         currentFruit = fruit;
+        //animatorOverrideController["Idle"] = fruit.idleAnimationClip;
+        //animatorOverrideController["Walk"] = fruit.walkAnimationClip;
+        clipOverrides["BatidoraIdle1"] = fruit.idleAnimationClip;
+        clipOverrides["BatidoraWalk1"] = fruit.walkAnimationClip;
+        animatorOverrideController.ApplyOverrides(clipOverrides);
     }
 
 }

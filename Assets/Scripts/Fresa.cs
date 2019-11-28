@@ -6,6 +6,7 @@ public class Fresa : Fruit
 {
     public override void PowerUp(PlatformerCharacter2D player)
     {
+        player.AddShot(this);
         player.AddLife();
     }
 }

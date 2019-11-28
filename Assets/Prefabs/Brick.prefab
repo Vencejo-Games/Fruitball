@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6665670133382276776}
   - component: {fileID: 6665670133382276782}
   - component: {fileID: 6665670133382276780}
-  - component: {fileID: -4889762125939521528}
+  - component: {fileID: -6217374986832386286}
   m_Layer: 0
-  m_Name: Pera
+  m_Name: Brick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 89bf3c706e4e0a04ca3b9490fad4442b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 32dd65f8733c1534c987643cd22ea6bb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -121,16 +121,16 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.1
+  m_Mass: 0.5
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0.1
+  m_GravityScale: 0.5
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-4889762125939521528
+--- !u!114 &-6217374986832386286
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -139,9 +139,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6665670133382276777}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 798d6c3d8adc0414a9bfa8fb48b4e215, type: 3}
+  m_Script: {fileID: 11500000, guid: 2836cc8b74f273741b60b264e06c5ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fruitSprite: {fileID: 21300000, guid: c262145ba08598844857a6636f096169, type: 3}
-  idleAnimationClip: {fileID: 7400000, guid: 6c7c0d1c8cdf58146932cc5156ed5cae, type: 2}
-  walkAnimationClip: {fileID: 7400000, guid: 6c7c0d1c8cdf58146932cc5156ed5cae, type: 2}
+  fruitSprite: {fileID: 0}
