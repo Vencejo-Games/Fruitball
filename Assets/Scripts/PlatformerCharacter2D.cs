@@ -25,7 +25,8 @@ public class PlatformerCharacter2D : MonoBehaviour
 
     private Game game;
     private Transform m_ShootingPoint;    // A position marking where to shoot
-    
+    private bool hasShot = false;
+    private Fruit currentFruit;
 
     private void Awake()
     {
@@ -123,10 +124,13 @@ public class PlatformerCharacter2D : MonoBehaviour
     {
         // Set whether or not the character is crouching in the animator
         m_Anim.SetBool("Shoot", shoot);
-        if (shoot)
+        if (shoot && hasShot)
         {
+            hasShot = false;
             // Instantiate a projectile
             Fruitball obj = Instantiate(fruitball, m_ShootingPoint.position, Quaternion.identity);
+            SpriteRenderer spriteR = obj.GetComponent<SpriteRenderer>();
+            spriteR.sprite = currentFruit.fruitSprite;
             obj.Move(m_FacingRight);
         }
     }
@@ -176,10 +180,16 @@ public class PlatformerCharacter2D : MonoBehaviour
         }
     }
 
-    private void AddLife()
+    public void AddLife()
     {
         lives++;
         game.UpdateHUD();
+    }
+
+    public void AddShot(Fruit fruit)
+    {
+        hasShot = true;
+        currentFruit = fruit;
     }
 
 }
