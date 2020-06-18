@@ -1,2 +1,2 @@
 # Fruitball
- Weekley Game Jam Fruitball
+ Weekly Game Jam Fruitball made with Unity
